@@ -2,11 +2,11 @@
 This is for the final project in CSCI 2270
 /*
 Project Summery:
-This program is an updated version of Assignment 4, where we used a linked list of "towers" to transfer a message from city to city. Instead, I will be adding changing the linked List to a graph, and allow the user to choose the message that they are sending. By using the Graph style instead of the linked List, the Program will be able to calculate the shortest path to send message through both number of cities and distance. Similar to Assignment 8, I will be seperating the cities into districts.
+This program is an updated version of Assignment 8, where we had districts of cities and had to find the shortest path and distance between them. The program will still be able to calculate the shortest path and distance, but I have added the concept of airports, where the user can add or remove airports from cities. The user can chose to find the shortest ground distance between cities, but if the destination city is in another district, and that district has an airport, they will be able to fly to that district. Unlike Assignment 8, I hard coded the name of the file with the city names and distances in.
 How to Run:
-TBD
+When the program starts, it should already go through all of the cities and add in the edges. the Menu will pop up with the options. if you want to find the shortest distance between two cities in two different districts, make sure to add airports to both districts, or there is no way for you to get there.
 Dependencies:
-TBD
+the file "zombieCities.txt" needs to be with the program, or it won't get the information.
 System	Requirements:
 Run on Virtual Machine, so Linux
 Group	Members:
