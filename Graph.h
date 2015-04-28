@@ -22,6 +22,7 @@ struct vertex{
     bool visited;
     bool airport;
     int distance;
+    vertex *next;
     vertex *previous;
     int district = -1;
 };
@@ -37,6 +38,7 @@ class Graph
         void setFalse();
         void findDistrict();
         void PrintPath(vertex *last, bool first);
+        void PrintPathDist(vertex *last, bool first);
         int ClosestAirportDistance(vertex *v, bool first);
         int ClosestAirportPath(vertex *v, bool first);
         bool findAirport(int district, int district2);

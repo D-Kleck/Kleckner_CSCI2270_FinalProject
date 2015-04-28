@@ -344,15 +344,16 @@ int Graph :: ClosestAirportDistance(vertex *start, bool first)
         if(vertices[i].district == start->district && vertices[i].airport == true)
         {
             temp = &vertices[i];
-            distance =shortestPath(start, temp);
-        }
-        if(distance < mindistance || mindistance == 0)
-        {
-            mindistance = distance;
-            path = temp;
+            vertices[i].distance = 0;
+            distance =shortestDistance(start, temp);
+            if(distance < mindistance || mindistance == 0)
+            {
+                mindistance = distance;
+                path = temp;
+            }
         }
     }
-    PrintPath(path, first);
+    PrintPathDist(path, first);
     return mindistance;
 }
 
@@ -403,7 +404,32 @@ int Graph :: shortestDistance(vertex *start, vertex *last) //similar to shortest
 void Graph :: PrintPath(vertex *last, bool first){
     //prints out the path, front to back if bool first is true, and backwards if first is false
     vector <string> path;
-    if(!first)
+    if(first == true)
+    {
+        while(last->next != NULL)
+        {
+            path.push_back(last->name);
+            last = last->previous;
+        }
+        for(int i = path.size()-1; i >= 0; i--)
+        {
+            cout << path[i] << ",";
+        }
+    }
+    else
+    {
+        while(last->next != NULL)
+        {
+            cout << last->name << ",";
+            last = last->previous;
+        }
+    }
+}
+
+void Graph :: PrintPathDist(vertex *last, bool first){
+    //prints out the path, front to back if bool first is true, and backwards if first is false
+    vector <string> path;
+    if(first == true)
     {
         while(last != NULL)
         {
@@ -441,12 +467,12 @@ int Graph :: ClosestAirportPath(vertex *start, bool first)
         {
             temp = &vertices[i];
             vertices[i].distance = 0;
-            distance = shortestDistance(start, temp);
-        }
-        if(distance < mindistance || mindistance == 0)
-        {
-            mindistance = distance;
-            path = temp;
+            distance = shortestPath(start, temp);
+            if(distance < mindistance || mindistance == 0)
+            {
+                mindistance = distance;
+                path = temp;
+            }
         }
     }
     PrintPath(path, first);
@@ -470,7 +496,6 @@ int Graph :: shortestPath(vertex *start, vertex *last) // similar to shortestPat
             if(qv.path.back().adj[j].v->visited == false)
             {
                 qv.path.back().adj[j].v->visited = true;
-
                 temp.path = qv.path;
                 temp.path.push_back(*qv.path.back().adj[j].v);
                 temp.distance = qv.distance +1;
@@ -515,16 +540,24 @@ void Graph :: shortestPath(string city1, string city2)
         {
             bool first = true;
             int toAirport = 0;
+            int Final = 0;
             int fromAirport = 0;
+            cout << start->name << ",";
             if(start->airport != true)
+            {
                 toAirport = ClosestAirportPath(start, first);
-            int FDist = 1;
+                Final = (toAirport-1) + Final;
+
+            }
+            Final++;
             first = false;
             if(last->airport != true)
+            {
                 fromAirport = ClosestAirportPath(last, first);
-            cout << endl;
-            int Final = toAirport + FDist + fromAirport;
-            cout << "With 1 flight the shortest path is :" << Final << endl;
+                Final = fromAirport + Final;
+            }
+            cout << last->name << endl;
+            cout << "With 1 flight the shortest path is : " << Final << endl;
         }
     }
 
@@ -604,16 +637,21 @@ void Graph :: shortestDistance(string city1, string city2)
         {
             bool first = true;
             int toAirport = 0;
+            int Final = 500;
             int fromAirport = 0;
-            if(start->airport !=true)
+            if(start->airport != true)
+            {
                 toAirport = ClosestAirportDistance(start, first);
-            int FDist = 500;
+                Final = toAirport + Final;
+            }
             first = false;
             if(last->airport != true)
+            {
                 fromAirport = ClosestAirportDistance(last, first);
+                Final = fromAirport + Final;
+            }
             cout << endl;
-            int Final = toAirport + FDist + fromAirport;
-            cout << "With 1 flight(all flights count for 500), the shortest distance is :" << Final << endl;
+            cout << "With 1 flight the shortest path is : " << Final << endl;
         }
     }
     else if(start->district == -1)
